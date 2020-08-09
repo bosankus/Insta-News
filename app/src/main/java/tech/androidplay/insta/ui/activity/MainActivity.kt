@@ -1,4 +1,4 @@
-package tech.androidplay.insta.view.activity
+package tech.androidplay.insta.ui.activity
 
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -10,7 +10,7 @@ import tech.androidplay.insta.R
 import tech.androidplay.insta.data.model.ResultData
 import tech.androidplay.insta.presenter.viewmodel.MainViewModel
 import tech.androidplay.insta.utility.HelperUtil.logMessage
-import tech.androidplay.insta.view.adapter.NewsAdapter
+import tech.androidplay.insta.ui.adapter.NewsAdapter
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -33,8 +33,7 @@ class MainActivity : AppCompatActivity() {
 
         rvNewsList.adapter = newsAdapter
 
-        val loadNews = mainViewModel.fetchNews("politics")
-        loadNews.observe(this, Observer {
+        mainViewModel.newsData.observe(this, Observer {
             when (it) {
                 is ResultData.Success -> {
                     newsAdapter.submitList(it.data?.articles)

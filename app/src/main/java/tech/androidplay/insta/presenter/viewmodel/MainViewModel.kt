@@ -2,10 +2,9 @@ package tech.androidplay.insta.presenter.viewmodel
 
 
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
+import androidx.lifecycle.*
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import tech.androidplay.insta.data.model.News
 import tech.androidplay.insta.data.model.ResultData
 import tech.androidplay.insta.data.repository.NewsRepository
@@ -18,14 +17,20 @@ import tech.androidplay.insta.data.repository.NewsRepository
 class MainViewModel @ViewModelInject constructor(private val newsRepository: NewsRepository) :
     ViewModel() {
 
-    private var _newsData: LiveData<News> = MutableLiveData()
-    val newsData: LiveData<News>
+    private var _newsData: LiveData<ResultData<News>> = MutableLiveData()
+    val newsData: LiveData<ResultData<News>>
         get() = _newsData
 
-    fun fetchNews(keyword: String): LiveData<ResultData<News>> {
-        return liveData(block = {
+    init {
+        fetchNews("covid-19")
+    }
+
+    private fun fetchNews(keyword: String): LiveData<ResultData<News>> {
+        _newsData = liveData(block = {
             emit(ResultData.Loading())
             emit(newsRepository.fetchNews(keyword))
         })
+        return _newsData
     }
+
 }
