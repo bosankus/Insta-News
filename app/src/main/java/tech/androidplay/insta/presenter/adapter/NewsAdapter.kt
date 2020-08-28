@@ -1,11 +1,10 @@
-package tech.androidplay.insta.ui.adapter
+package tech.androidplay.insta.presenter.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import tech.androidplay.insta.R
 import tech.androidplay.insta.data.model.News.Article
-import tech.androidplay.insta.data.model.NewsDiffUtil
 
 /**
  * Created by Androidplay

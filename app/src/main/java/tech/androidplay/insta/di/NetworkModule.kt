@@ -1,9 +1,12 @@
 package tech.androidplay.insta.di
 
+import android.content.Context
+import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Converter
@@ -11,8 +14,13 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 import tech.androidplay.insta.data.network.ApiService
+import tech.androidplay.insta.data.repository.NewsRepository
+import tech.androidplay.insta.data.room.NewsDao
+import tech.androidplay.insta.data.room.NewsDatabase
+import tech.androidplay.insta.utility.Constants.DATABASE_NAME
 import tech.androidplay.insta.utility.NetworkConstants.BASE_URL
 import java.util.concurrent.TimeUnit
+import javax.inject.Singleton
 
 /**
  * Created by Androidplay
@@ -23,6 +31,23 @@ import java.util.concurrent.TimeUnit
 @InstallIn(ApplicationComponent::class)
 @Module
 object NetworkModule {
+
+    @Singleton
+    @Provides
+    fun provideNewsDatabase(
+        @ApplicationContext app: Context
+    ) : NewsDatabase =
+        Room.databaseBuilder(
+            app,
+            NewsDatabase::class.java,
+            DATABASE_NAME
+        ).build()
+
+
+    @Singleton
+    @Provides
+    fun provideNewsDao(db: NewsDatabase) = db.getNewsDao()
+
 
     @Provides
     fun getBaseUrl(): String {
@@ -65,5 +90,10 @@ object NetworkModule {
     @Provides
     fun getApiService(retrofit: Retrofit): ApiService {
         return retrofit.create(ApiService::class.java)
+    }
+
+    @Provides
+    fun getNewsRepository(apiService: ApiService, newsDao: NewsDao): NewsRepository {
+        return NewsRepository(apiService, newsDao)
     }
 }

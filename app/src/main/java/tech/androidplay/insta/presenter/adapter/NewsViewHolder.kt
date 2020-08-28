@@ -1,4 +1,4 @@
-package tech.androidplay.insta.ui.adapter
+package tech.androidplay.insta.presenter.adapter
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

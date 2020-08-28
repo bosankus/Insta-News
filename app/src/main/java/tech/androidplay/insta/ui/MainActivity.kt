@@ -1,4 +1,4 @@
-package tech.androidplay.insta.ui.activity
+package tech.androidplay.insta.ui
 
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -10,7 +10,7 @@ import tech.androidplay.insta.R
 import tech.androidplay.insta.data.model.ResultData
 import tech.androidplay.insta.presenter.viewmodel.MainViewModel
 import tech.androidplay.insta.utility.HelperUtil.logMessage
-import tech.androidplay.insta.ui.adapter.NewsAdapter
+import tech.androidplay.insta.presenter.adapter.NewsAdapter
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {

@@ -22,15 +22,25 @@ class MainViewModel @ViewModelInject constructor(private val newsRepository: New
         get() = _newsData
 
     init {
-        fetchNews("covid-19")
+        fetchNews()
     }
 
-    private fun fetchNews(keyword: String): LiveData<ResultData<News>> {
+    private fun fetchNews(keyword: String = "covid-19"): LiveData<ResultData<News>> {
         _newsData = liveData(block = {
             emit(ResultData.Loading())
             emit(newsRepository.fetchNews(keyword))
         })
         return _newsData
     }
+
+
+ /*   // Fetch from Room
+    private fun getNews(): LiveData<ResultData<News>> {
+        _newsData = liveData(block = {
+            emit(ResultData.Loading())
+            emit(newsRepository.getAllNews())
+        })
+        return _newsData
+    }*/
 
 }
