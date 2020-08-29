@@ -11,7 +11,7 @@ import tech.androidplay.insta.utility.Constants.DATABASE_NAME
 data class News(
 
     @SerializedName("articles")
-    val articles: List<Article>,
+    val articles: List<Article>?,
 
     @SerializedName("status")
     val status: String?,

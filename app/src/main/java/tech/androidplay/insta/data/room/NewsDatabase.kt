@@ -17,7 +17,8 @@ import tech.androidplay.insta.data.typeconverter.SourceConverter
 
 @Database(
     entities = [News::class],
-    version = 1
+    version = 1,
+    exportSchema = false
 )
 @TypeConverters(
     ArticleConverter::class,

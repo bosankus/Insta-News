@@ -92,6 +92,7 @@ object NetworkModule {
         return retrofit.create(ApiService::class.java)
     }
 
+    @Singleton
     @Provides
     fun getNewsRepository(apiService: ApiService, newsDao: NewsDao): NewsRepository {
         return NewsRepository(apiService, newsDao)

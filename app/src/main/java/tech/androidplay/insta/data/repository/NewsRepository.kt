@@ -1,6 +1,8 @@
 package tech.androidplay.insta.data.repository
 
-import androidx.lifecycle.LiveData
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.withContext
 import tech.androidplay.insta.data.model.News
 import tech.androidplay.insta.data.model.ResultData
 import tech.androidplay.insta.data.network.ApiService
@@ -22,9 +24,21 @@ class NewsRepository @Inject constructor(
         return ResultData.Success(result)
     }
 
-    // Fetching from Room
-    fun getAllNews(): ResultData<News> {
+    suspend fun fetchAndSaveNewsToDB(keyWord: String) {
+        coroutineScope {
+            val result = apiService.getNews(keyWord)
+            withContext(Dispatchers.Main) {
+                addAllNews(result)
+            }
+        }
+    }
+
+    suspend fun getAllNews(): ResultData<News> {
         val result = newsDao.getAllNews()
         return ResultData.Success(result)
+    }
+
+    private suspend fun addAllNews(news: News) {
+        newsDao.addNews(news)
     }
 }

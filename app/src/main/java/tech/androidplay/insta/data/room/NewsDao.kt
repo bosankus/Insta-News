@@ -15,10 +15,10 @@ import tech.androidplay.insta.data.model.News
 interface NewsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addNews(news: News)
+    suspend fun addNews(news: News)
 
     @Query("SELECT articles FROM news_table")
-    fun getAllNews(): News
+    suspend fun getAllNews(): News
 
     @Delete
     fun deleteNews(news: News)

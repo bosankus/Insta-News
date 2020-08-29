@@ -1,7 +1,11 @@
 package tech.androidplay.insta
 
 import android.app.Application
+import android.util.Log
+import androidx.hilt.work.HiltWorkerFactory
+import androidx.work.Configuration
 import dagger.hilt.android.HiltAndroidApp
+import javax.inject.Inject
 
 /**
  * Created by Androidplay
@@ -10,5 +14,15 @@ import dagger.hilt.android.HiltAndroidApp
  */
 
 @HiltAndroidApp
-class InstaApplication : Application() {
+class InstaApplication : Application(), Configuration.Provider {
+
+    @Inject
+    lateinit var workerFactory: HiltWorkerFactory
+
+    override fun getWorkManagerConfiguration(): Configuration {
+        return Configuration.Builder()
+            .setMinimumLoggingLevel(Log.DEBUG)
+            .setWorkerFactory(workerFactory)
+            .build()
+    }
 }

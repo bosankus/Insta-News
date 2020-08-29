@@ -9,4 +9,6 @@ package tech.androidplay.insta.utility
 object Constants {
 
     const val DATABASE_NAME = "news_table"
+
+    const val WORK_MANAGER_TAG = "WORK_MANAGER_TAG"
 }
